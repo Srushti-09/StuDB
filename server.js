@@ -1,6 +1,7 @@
 const express = require('express');
+const path = require('path');
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -18,7 +19,12 @@ app.use((req, res, next) => {
 });
 
 // Serve static files from the current directory
-app.use(express.static('./'));
+app.use(express.static(path.join(__dirname, './')));
+
+// Root route to serve index.html explicitly
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // In-memory data store for students
 let students = [
@@ -124,9 +130,14 @@ app.delete('/students/:id', (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
-  console.log('===========================================');
-  console.log(`Student Records API listening at http://localhost:${port}`);
-  console.log('Monitoring API calls in real-time...');
-  console.log('===========================================');
-});
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log('===========================================');
+    console.log(`Student Records API listening at http://localhost:${port}`);
+    console.log('Monitoring API calls in real-time...');
+    console.log('===========================================');
+  });
+}
+
+// Export the app for Vercel
+module.exports = app;
