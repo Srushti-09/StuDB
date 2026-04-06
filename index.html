@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StuDB | Student Management Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="dashboard">
+        <header>
+            <div class="header-content">
+                <h1>StuDB.</h1>
+                <p class="subtitle">Premium Student Records Management</p>
+            </div>
+        </header>
+
+        <main>
+            <section class="panel insert-panel glassmorphism">
+                <h2 class="panel-title">Add New Record</h2>
+                <form id="add-student-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-id">Student ID (5-digit)</label>
+                        <input type="number" id="student-id" placeholder="E.g. 10001" min="10000" max="99999" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <select id="year" required>
+                            <option value="" disabled selected>Select Year</option>
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year">3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="major">Branch Name</label>
+                        <input type="text" id="major" placeholder="E.g. Computer Science" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Record</button>
+                </form>
+            </section>
+
+            <section class="panel records-panel glassmorphism">
+                <div class="panel-header" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                    <h2 class="panel-title" style="margin: 0; border: none; padding: 0;">Active Directory</h2>
+                    <form id="search-student-form" style="display: flex; gap: 0.5rem; align-items: center;" onsubmit="searchStudent(event)">
+                        <input type="number" id="search-id" placeholder="Search by ID..." style="margin: 0; padding: 0.5rem 1rem; width: 160px;" min="10000" max="99999" required>
+                        <button type="submit" class="btn btn-primary" style="padding: 0.5rem 1rem; width: auto;">Search</button>
+                        <button type="button" onclick="document.getElementById('search-id').value=''; fetchStudents()" class="btn btn-neutral" style="padding: 0.5rem 1rem; width: auto;">View All</button>
+                    </form>
+                </div>
+                <div id="student-list" class="records-grid">
+                    <div class="loading">Loading directory...</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Update Modal -->
+    <div id="update-modal" class="modal">
+        <div class="modal-dialog glassmorphism">
+            <h3 class="panel-title">Update Record</h3>
+            <form id="update-student-form">
+                <input type="hidden" id="update-id">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="update-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Year</label>
+                    <select id="update-year" required>
+                        <option value="1st Year">1st Year</option>
+                        <option value="2nd Year">2nd Year</option>
+                        <option value="3rd Year">3rd Year</option>
+                        <option value="4th Year">4th Year</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Branch Name</label>
+                    <input type="text" id="update-major" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" onclick="closeUpdateModal()" class="btn btn-neutral">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
