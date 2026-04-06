@@ -19,11 +19,11 @@ app.use((req, res, next) => {
 });
 
 // Serve static files from the current directory
-app.use(express.static(path.join(__dirname, './')));
+app.use(express.static(path.join(__dirname, '../')));
 
 // Root route to serve index.html explicitly
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, '../index.html'));
 });
 
 // In-memory data store for students
